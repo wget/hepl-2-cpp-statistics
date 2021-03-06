@@ -1,0 +1,3 @@
+src/lib/utils/
+dist/
+moc_*.cpp

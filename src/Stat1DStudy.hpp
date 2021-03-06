@@ -64,7 +64,7 @@ class Stat1DStudy {
 
 // Graphical stuff
 #include <QApplication>
-#include "./lib/graph/Graph1DDiscrete/graphstat1ddiscrete.h"
+#include "./lib/graph/Graph1DDiscret/graphstat1ddiscrete.h"
 extern QApplication *qtApp;
 
 #endif // STAT1DSTUDY_HPP_INCLUDED

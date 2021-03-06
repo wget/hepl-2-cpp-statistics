@@ -10,21 +10,21 @@ Sample* Stat2DStudy::getSample() const {
     return m_sample;
 }
 
-double Stat2DStudy::getMean1() const {
-    return m_mean1;
+double Stat2DStudy::getMeanA() const {
+    return m_meanA;
 }
 
-double Stat2DStudy::getMean2() const {
-    return m_mean2;
+double Stat2DStudy::getMeanB() const {
+    return m_meanB;
 }
 
-double Stat2DStudy::getCoeff1() const {
-    return m_coeff1;
+double Stat2DStudy::getCoeffA() const {
+    return m_coeffA;
 
 }
 
-double Stat2DStudy::getCoeff2() const {
-    return m_coeff2;
+double Stat2DStudy::getCoeffB() const {
+    return m_coeffB;
 }
 
 double Stat2DStudy::getCoeffCorrelation() const {
@@ -32,10 +32,10 @@ double Stat2DStudy::getCoeffCorrelation() const {
 }
 
 // Setters
-void Stat2DStudy::setCoeff1() {
+void Stat2DStudy::setCoeffA() {
 }
 
-void Stat2DStudy::setCoeff2() {
+void Stat2DStudy::setCoeffB() {
 }
 
 void Stat2DStudy::setCoeffCorrelation(double coeff) {

@@ -10,17 +10,15 @@
 #define UI_GRAPHSTAT2D_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenuBar>
-#include <QtGui/QPushButton>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
 
 QT_BEGIN_NAMESPACE
 
@@ -75,23 +73,23 @@ public:
 
     void retranslateUi(QMainWindow *GraphStat2D)
     {
-        GraphStat2D->setWindowTitle(QApplication::translate("GraphStat2D", "GraphStat2D", 0, QApplication::UnicodeUTF8));
-        labelEquation->setText(QApplication::translate("GraphStat2D", "Equation :", 0, QApplication::UnicodeUTF8));
+        GraphStat2D->setWindowTitle(QApplication::translate("GraphStat2D", "GraphStat2D", 0, 0));
+        labelEquation->setText(QApplication::translate("GraphStat2D", "Equation :", 0, 0));
 #ifndef QT_NO_TOOLTIP
-        ButtonTracer->setToolTip(QApplication::translate("GraphStat2D", "<html><head/><body><p>Ctrl-T</p></body></html>", 0, QApplication::UnicodeUTF8));
+        ButtonTracer->setToolTip(QApplication::translate("GraphStat2D", "<html><head/><body><p>Ctrl-T</p></body></html>", 0, 0));
 #endif // QT_NO_TOOLTIP
-        ButtonTracer->setText(QApplication::translate("GraphStat2D", "Tracer la droite", 0, QApplication::UnicodeUTF8));
-        ButtonTracer->setShortcut(QApplication::translate("GraphStat2D", "Ctrl+T", 0, QApplication::UnicodeUTF8));
+        ButtonTracer->setText(QApplication::translate("GraphStat2D", "Tracer la droite", 0, 0));
+        ButtonTracer->setShortcut(QApplication::translate("GraphStat2D", "Ctrl+T", 0, 0));
 #ifndef QT_NO_TOOLTIP
-        ButtonAnnuler->setToolTip(QApplication::translate("GraphStat2D", "<html><head/><body><p>Ctrl-Z</p></body></html>", 0, QApplication::UnicodeUTF8));
+        ButtonAnnuler->setToolTip(QApplication::translate("GraphStat2D", "<html><head/><body><p>Ctrl-Z</p></body></html>", 0, 0));
 #endif // QT_NO_TOOLTIP
-        ButtonAnnuler->setText(QApplication::translate("GraphStat2D", "Annuler", 0, QApplication::UnicodeUTF8));
-        ButtonAnnuler->setShortcut(QApplication::translate("GraphStat2D", "Ctrl+Z", 0, QApplication::UnicodeUTF8));
+        ButtonAnnuler->setText(QApplication::translate("GraphStat2D", "Annuler", 0, 0));
+        ButtonAnnuler->setShortcut(QApplication::translate("GraphStat2D", "Ctrl+Z", 0, 0));
 #ifndef QT_NO_TOOLTIP
-        ButtonSelectionner->setToolTip(QApplication::translate("GraphStat2D", "<html><head/><body><p>Ctrl-S</p></body></html>", 0, QApplication::UnicodeUTF8));
+        ButtonSelectionner->setToolTip(QApplication::translate("GraphStat2D", "<html><head/><body><p>Ctrl-S</p></body></html>", 0, 0));
 #endif // QT_NO_TOOLTIP
-        ButtonSelectionner->setText(QApplication::translate("GraphStat2D", "Selectionner", 0, QApplication::UnicodeUTF8));
-        ButtonSelectionner->setShortcut(QApplication::translate("GraphStat2D", "Ctrl+S", 0, QApplication::UnicodeUTF8));
+        ButtonSelectionner->setText(QApplication::translate("GraphStat2D", "Selectionner", 0, 0));
+        ButtonSelectionner->setShortcut(QApplication::translate("GraphStat2D", "Ctrl+S", 0, 0));
     } // retranslateUi
 
 };

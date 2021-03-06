@@ -10,10 +10,10 @@ class Stat2DStudy {
         // Model members
         const HeplString FILE_DELIMITER = ":";
         Sample *m_sample;
-        double m_mean1;
-        double m_mean2;
-        double m_coeff1;
-        double m_coeff2;
+        double m_meanA;
+        double m_meanB;
+        double m_coeffA;
+        double m_coeffB;
         double m_coeffCorrelation;
 
     public:
@@ -24,14 +24,14 @@ class Stat2DStudy {
         void displayReport() const;
         Sample* getSample() const;
 
-        double getMean1() const;
-        double getMean2() const;
-        double getCoeff1() const;
-        double getCoeff2() const;
+        double getMeanA() const;
+        double getMeanB() const;
+        double getCoeffA() const;
+        double getCoeffB() const;
         double getCoeffCorrelation() const;
 
-        void setCoeff1();
-        void setCoeff2();
+        void setCoeffA();
+        void setCoeffB();
         void setCoeffCorrelation(double coeff);
 };
 

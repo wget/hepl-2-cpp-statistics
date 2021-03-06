@@ -1,20 +1,22 @@
 #include "graphstat2d.h"
 #include "ui_graphstat2d.h"
+#include "../../../Data2D.hpp"
 
-GraphStat2D::GraphStat2D(const EtudeStat2D* E1,QWidget *parent) :
+GraphStat2D::GraphStat2D(const Stat2DStudy* E1,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GraphStat2D)
 {
    ui->setupUi(this);
    Pt = true;
    TracerLigne = false;
-   EtudeLocal = (EtudeStat2D*)E1;
+   EtudeLocal = (Stat2DStudy*)E1;
 
-   this->p = dynamic_cast<DataSourceSerie2D*>((E1->getE())->getSource());
-
-	L = new Liste<Data2D>(*(p->getL()));
-	// Déterminer MinX, MinY, MaxX, MaxY dans les Data2D de L
-	// ...
+   // TODO: GetE is unclear.. What is this?
+   // this->p = dynamic_cast<DataSourceSerie2D*>((E1->getE())->getSource());
+   //
+	// L = new HeplList<Data2D>(*(p->getL()));
+	// // Déterminer MinX, MinY, MaxX, MaxY dans les Data2D de L
+	// // ...
 
 }
 
@@ -27,7 +29,8 @@ void GraphStat2D::on_ButtonTracer_clicked()
 {
     printf("on_ButtonTracer_clicked\n");fflush(stdout);
     
-    p->setL(L);          
+    // TODO: We need to set the list...
+    // p->setL(L);          
     EtudeLocal->setCoeffA();		// Calcul des coefficients de la droite
     EtudeLocal->setCoeffB();
 
@@ -59,7 +62,8 @@ void GraphStat2D::on_ButtonSelectionner_clicked()
 	ui->lineEquation->clear();
 	this->update();
 
-     p->setL(L);                  
+    // TODO: We need to set the list...
+     // p->setL(L);                  
     
 }
 
@@ -93,25 +97,25 @@ QPainter painter(this);
 	sprintf(Buff,"%-8.2f",MaxX);
 	painter.drawText(394 ,380,Buff);	//40 + 3
 	
-	int i = 0;
-	while (i < L->Size())
-	{ 
-		painter.drawText(80 + (this->L->getElement(i).getVal1() - MinX) * 340 / (MaxX - MinX)  - 3,
-	     320 - (this->L->getElement(i).getVal2() - MinY) * 280 / (MaxY - MinY) +3,"x");
-	   i++;
-	}
-	     
-    if (Pt)
-       painter.drawText(PointDepart.x()-3,PointDepart.y()+3,"x");
-    painter.drawRect(PointDepart.x(),PointDepart.y(),PointArrivee.x()-PointDepart.x(),PointArrivee.y()-PointDepart.y());
-	if (TracerLigne)
-		{
-		float X1=MinX,Y1,X2=MaxX,Y2;
-		Y1 = X1 * EtudeLocal->getCoeffA() + EtudeLocal->getCoeffB();
-		Y2 = X2 * EtudeLocal->getCoeffA() + EtudeLocal->getCoeffB();
-		painter.drawLine(80   - 3,320 - (Y1 - MinY) * 280 / (MaxY - MinY) +3,
-	    80 +  340 - 3, 320 - (Y2 - MinY) * 280 / (MaxY - MinY) +3);
-		}
+	// int i = 0;
+	// while (i < L->getNumberItems())
+	// { 
+	// 	painter.drawText(80 + (this->L->getElement(i).getValue1() - MinX) * 340 / (MaxX - MinX)  - 3,
+	//      320 - (this->L->getElement(i).getValue2() - MinY) * 280 / (MaxY - MinY) +3,"x");
+	//    i++;
+	// }
+	//      
+    // if (Pt)
+    //    painter.drawText(PointDepart.x()-3,PointDepart.y()+3,"x");
+    // painter.drawRect(PointDepart.x(),PointDepart.y(),PointArrivee.x()-PointDepart.x(),PointArrivee.y()-PointDepart.y());
+	// if (TracerLigne)
+	// 	{
+	// 	float X1=MinX,Y1,X2=MaxX,Y2;
+	// 	Y1 = X1 * EtudeLocal->getCoeffA() + EtudeLocal->getCoeffB();
+	// 	Y2 = X2 * EtudeLocal->getCoeffA() + EtudeLocal->getCoeffB();
+	// 	painter.drawLine(80   - 3,320 - (Y1 - MinY) * 280 / (MaxY - MinY) +3,
+	//     80 +  340 - 3, 320 - (Y2 - MinY) * 280 / (MaxY - MinY) +3);
+	// 	}
 
 }
 

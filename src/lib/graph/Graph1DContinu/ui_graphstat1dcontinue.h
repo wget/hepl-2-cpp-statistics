@@ -10,16 +10,16 @@
 #define UI_GRAPHSTAT1DCONTINUE_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
+#include <QWidget>
 
 QT_BEGIN_NAMESPACE
 
@@ -99,13 +99,13 @@ public:
 
     void retranslateUi(QMainWindow *GraphStat1DContinue)
     {
-        GraphStat1DContinue->setWindowTitle(QApplication::translate("GraphStat1DContinue", "GraphStat1DContinue", 0, QApplication::UnicodeUTF8));
-        labelHistogramme->setText(QApplication::translate("GraphStat1DContinue", "Histogramme", 0, QApplication::UnicodeUTF8));
-        labelHistogrammeCumule->setText(QApplication::translate("GraphStat1DContinue", "Histogramme cumule", 0, QApplication::UnicodeUTF8));
-        labelMoyenne->setText(QApplication::translate("GraphStat1DContinue", "Moyenne :", 0, QApplication::UnicodeUTF8));
-        labelEcartType->setText(QApplication::translate("GraphStat1DContinue", "Ecart type :", 0, QApplication::UnicodeUTF8));
-        labelMediane->setText(QApplication::translate("GraphStat1DContinue", "Mediane :", 0, QApplication::UnicodeUTF8));
-        labelMode->setText(QApplication::translate("GraphStat1DContinue", "Mode :", 0, QApplication::UnicodeUTF8));
+        GraphStat1DContinue->setWindowTitle(QApplication::translate("GraphStat1DContinue", "GraphStat1DContinue", 0, 0));
+        labelHistogramme->setText(QApplication::translate("GraphStat1DContinue", "Histogramme", 0, 0));
+        labelHistogrammeCumule->setText(QApplication::translate("GraphStat1DContinue", "Histogramme cumule", 0, 0));
+        labelMoyenne->setText(QApplication::translate("GraphStat1DContinue", "Moyenne :", 0, 0));
+        labelEcartType->setText(QApplication::translate("GraphStat1DContinue", "Ecart type :", 0, 0));
+        labelMediane->setText(QApplication::translate("GraphStat1DContinue", "Mediane :", 0, 0));
+        labelMode->setText(QApplication::translate("GraphStat1DContinue", "Mode :", 0, 0));
     } // retranslateUi
 
 };

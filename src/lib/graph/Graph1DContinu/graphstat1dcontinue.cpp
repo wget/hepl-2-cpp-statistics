@@ -1,24 +1,23 @@
 #include "graphstat1dcontinue.h"
 #include "ui_graphstat1dcontinue.h"
-#include <QPainter>
-#include "EtudeStat1D.h"
+#include <QtGui/QPainter>
 
-GraphStat1DContinue::GraphStat1DContinue(const EtudeStat1D& E1,QWidget *parent) :
+GraphStat1DContinue::GraphStat1DContinue(const Stat1DStudy& E1,QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::GraphStat1DContinue)
 {
     ui->setupUi(this);
-this->p = dynamic_cast<DataSourceSerieContinue*>((E1.getE())->getSource());
-L = new Liste<Data1D>(*(p->getL()));
-cout << "dans le graphique" << endl;
-L->Affiche();
+this->p = dynamic_cast<DataSourceSerieContinue*>((E1.getSample())->getDataSource());
+L = new HeplList<Data1D>(p->getItemOccurrenceList());
+std::cout << "dans le graphique" << std::endl;
+L->display();
 char	Buff[10];
-sprintf(Buff,"%6.1f",E1.getMoyenne());
+sprintf(Buff,"%6.1f",E1.getMean());
 ui->lineMoyenne->setText(Buff);
-sprintf(Buff,"%6.1f",E1.getEcartType());
+sprintf(Buff,"%6.1f",E1.getStandardDeviation());
 ui->lineEcartType->setText(Buff);
-sprintf(Buff,"%6d",E1.getE()->getSource()->getEffTotal());   
-sprintf(Buff,"%6.1f",E1.getMediane());   
+sprintf(Buff,"%6d",E1.getSample()->getDataSource()->getTotalHeadcount());   
+sprintf(Buff,"%6.1f",E1.getMedian());   
 ui->lineMediane->setText(Buff);
 float	M[5];
 int i = 0;
@@ -29,7 +28,7 @@ BMode[0] = '\0';
 
 while (M[i])
 { 
-sprintf(Buff,"%6.1f  ",M[i]);cout << "----" << Buff << endl;
+sprintf(Buff,"%6.1f  ",M[i]);std::cout << "----" << Buff << std::endl;
 strcat(BMode,Buff);
 i++;
 }
@@ -42,18 +41,18 @@ GraphStat1DContinue::~GraphStat1DContinue()
     delete ui;
 }
 
-void GraphStat1DContinue::paintEvent(QPaintEvent *event)
+void GraphStat1DContinue::paintEvent()
 {
-	int 	Taille = L->Size();
-	float	Intervalle = p->getIntervalle();
+	int 	Taille = L->getNumberItems();
+	float	Intervalle = p->getInterval();
 
-	float Debut = p->getDebut();
-	int	EffMin = L->getElement(0).getEff(), EffMax = 	L->getElement(0).getEff();
+	float Debut = p->getStart();
+	unsigned int	EffMin = ((Data1D&)L->getElement(0)).getHeadcount(), EffMax = ((Data1D&)L->getElement(0)).getHeadcount();
 	int	i = 1,NbIntervalle = 1;
 	while (i<= Taille - 1)
-		{ if (L->getElement(i).getEff() < EffMin ) EffMin = L->getElement(i).getEff();
-		  if (L->getElement(i).getEff() > EffMax ) EffMax = L->getElement(i).getEff();
-		  if (L->getElement(i).getVal() >= Debut + (NbIntervalle+1) * Intervalle) 
+		{ if (((Data1D&)L->getElement(i)).getHeadcount() < EffMin ) EffMin = ((Data1D&)L->getElement(i)).getHeadcount();
+		  if (((Data1D&)L->getElement(i)).getHeadcount() > EffMax ) EffMax = ((Data1D&)L->getElement(i)).getHeadcount();
+		  if (((Data1D&)L->getElement(i)).getValue() >= Debut + (NbIntervalle+1) * Intervalle) 
 		     { NbIntervalle++;
 		       continue;
 		     }
@@ -79,20 +78,20 @@ i = 0;
 int j = 0;
     while (j<NbIntervalle)
     { 
-    if (L->getElement(i).getVal() > Debut + (j+1) * Intervalle) {j++;continue;}
-    painter.drawLine(50 + j * 400 / NbIntervalle ,190 -L->getElement(i).getEff()*170/	EffMax,50 + j * 400 / NbIntervalle ,193); 
-    painter.drawLine(50 + j * 400 / NbIntervalle ,190 -L->getElement(i).getEff()*170/	EffMax,50 + (j + 1) * 400 / NbIntervalle ,190 -L->getElement(i).getEff()*170/	EffMax); 
+    if (((Data1D&)L->getElement(i)).getValue() > Debut + (j+1) * Intervalle) {j++;continue;}
+    painter.drawLine(50 + j * 400 / NbIntervalle ,190 - ((Data1D&)L->getElement(i)).getHeadcount() * 170 / EffMax, 50 + j * 400 / NbIntervalle, 193); 
+    painter.drawLine(50 + j * 400 / NbIntervalle ,190 - ((Data1D&)L->getElement(i)).getHeadcount() * 170 / EffMax, 50 + (j + 1) * 400 / NbIntervalle, 190 - ((Data1D&)L->getElement(i)).getHeadcount() * 170/ EffMax); 
     
     j++;
-    if (L->getElement(i).getVal() > Debut + (j+1) * Intervalle) {j++;continue;}
-    painter.drawLine(50 + j * 400 / NbIntervalle ,190 -L->getElement(i).getEff()*170/	EffMax,50 + j * 400 / NbIntervalle ,193); 
+    if (((Data1D&)L->getElement(i)).getValue() > Debut + (j+1) * Intervalle) {j++;continue;}
+    painter.drawLine(50 + j * 400 / NbIntervalle, 190 - ((Data1D&)L->getElement(i)).getHeadcount() * 170/ EffMax, 50 + j * 400 / NbIntervalle, 193); 
     i++;
     }
     
 // Tracer l'histogramme cumule 
-	 Debut = p->getDebut();
-	 int EffTotal = p->getEffTotal();
-	 int 	D1 = 0,D2 = L->getElement(0).getEff();
+	 Debut = p->getStart();
+	 int EffTotal = p->getTotalHeadcount();
+	 int 	D1 = 0,D2 = ((Data1D&)L->getElement(0)).getHeadcount();
 i=1; j = 1;
     while (j<NbIntervalle)
     {
@@ -102,16 +101,17 @@ i=1; j = 1;
     D1 = D2;
     
     
-    if (L->getElement(i).getVal() < Debut + (j+1) * Intervalle) {D2 += L->getElement(i).getEff();
-      i++;j++;continue;}
-    j++;
+    if (((Data1D&)L->getElement(i)).getValue() < Debut + (j+1) * Intervalle) {
+        D2 += ((Data1D&)L->getElement(i)).getHeadcount();
+        i++;j++;continue;}
+        j++;
     }
      painter.drawLine(50 + 400 * (j-1) / NbIntervalle,440 -D1*170/EffTotal ,50 + 400 * j/NbIntervalle,440 -D2*170/EffTotal );
     painter.drawLine(50 + j * 400 / NbIntervalle ,440 -D2*170/	EffTotal,50 + j * 400 / NbIntervalle ,443); 
 
 // Ecriture des valeurs 
 	
-	Debut = p->getDebut();
+	Debut = p->getStart();
 	char	Buff[10];
 	i = 0;
 	while (i <= NbIntervalle + 1)

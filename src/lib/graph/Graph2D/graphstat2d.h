@@ -2,9 +2,11 @@
 #define GRAPHSTAT2D_H
 
 #include <QMainWindow>
-#include <QMouseEvent>
-#include <QPainter>
-#include "EtudeStat2D.h"
+#include <QtGui/QMouseEvent>
+#include <QtGui/QPainter>
+#include <QtWidgets/QPushButton>
+#include "../../../Stat2DStudy.hpp"
+#include "../../../DataSourceSerie2D.hpp"
 
 namespace Ui {
 class GraphStat2D;
@@ -15,7 +17,7 @@ class GraphStat2D : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GraphStat2D(const EtudeStat2D*,QWidget *parent = 0);
+    explicit GraphStat2D(const Stat2DStudy*,QWidget *parent = 0);
     ~GraphStat2D();
     void paintEvent(QPaintEvent *);
     void mouseReleaseEvent(QMouseEvent *);
@@ -35,10 +37,10 @@ private:
     float       			MinX,MinY,
                 			MaxX,MaxY;
                 
-    Liste<Data2D>* 	L ;
-    Liste<Data2D> 	LUndo ;
+    HeplList<Data2D>* 	L ;
+    HeplList<Data2D>*	LUndo ;
     DataSourceSerie2D* 	p;
-    EtudeStat2D*			EtudeLocal;
+    Stat2DStudy*			EtudeLocal;
 
 };
 

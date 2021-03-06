@@ -10,16 +10,15 @@
 #define UI_GRAPHSTATIS1DDISCRETE_H
 
 #include <QtCore/QVariant>
-#include <QtGui/QAction>
-#include <QtGui/QApplication>
-#include <QtGui/QButtonGroup>
-#include <QtGui/QHeaderView>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QMainWindow>
-#include <QtGui/QMenuBar>
-#include <QtGui/QStatusBar>
-#include <QtGui/QWidget>
+#include <QtWidgets/QAction>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenuBar>
+#include <QtWidgets/QStatusBar>
 
 QT_BEGIN_NAMESPACE
 
@@ -99,13 +98,13 @@ public:
 
     void retranslateUi(QMainWindow *GraphStat1DDiscrete)
     {
-        GraphStat1DDiscrete->setWindowTitle(QApplication::translate("GraphStat1DDiscrete", "GraphStat1DDiscrete", 0, QApplication::UnicodeUTF8));
-        labelHistogramme->setText(QApplication::translate("GraphStat1DDiscrete", "Histogramme", 0, QApplication::UnicodeUTF8));
-        labelHistogrammeCumule->setText(QApplication::translate("GraphStat1DDiscrete", "Histogramme cumule", 0, QApplication::UnicodeUTF8));
-        labelMoyenne->setText(QApplication::translate("GraphStat1DDiscrete", "Moyenne :", 0, QApplication::UnicodeUTF8));
-        labelEcartType->setText(QApplication::translate("GraphStat1DDiscrete", "Ecart type :", 0, QApplication::UnicodeUTF8));
-        labelMediane->setText(QApplication::translate("GraphStat1DDiscrete", "Mediane :", 0, QApplication::UnicodeUTF8));
-        labelMode->setText(QApplication::translate("GraphStat1DDiscrete", "Mode :", 0, QApplication::UnicodeUTF8));
+        GraphStat1DDiscrete->setWindowTitle(QApplication::translate("GraphStat1DDiscrete", "GraphStat1DDiscrete", 0, 0));
+        labelHistogramme->setText(QApplication::translate("GraphStat1DDiscrete", "Histogramme", 0, 0));
+        labelHistogrammeCumule->setText(QApplication::translate("GraphStat1DDiscrete", "Histogramme cumule", 0, 0));
+        labelMoyenne->setText(QApplication::translate("GraphStat1DDiscrete", "Moyenne :", 0, 0));
+        labelEcartType->setText(QApplication::translate("GraphStat1DDiscrete", "Ecart type :", 0, 0));
+        labelMediane->setText(QApplication::translate("GraphStat1DDiscrete", "Mediane :", 0, 0));
+        labelMode->setText(QApplication::translate("GraphStat1DDiscrete", "Mode :", 0, 0));
     } // retranslateUi
 
 };

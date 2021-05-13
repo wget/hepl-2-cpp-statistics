@@ -59,6 +59,12 @@ EXECS_WITH_PATH = $(patsubst %,$(DIST_PATH)/%, $(EXECS))
 #    .o file extension
 OBJ = $(patsubst %, $(OBJ_PATH)/%.o, $(filter-out dist/obj/tests/%,$(filter-out $(EXECS),$(SRC:$(SRC_PATH)/%.cpp=%))))
 
+# Search for all files having a file extension starting with 'h' (we want
+# headers here), recursively starting from the current working directory, for
+# each of these file search for the presence of the 'Q_OBJECT' macro and
+# display filenames for which we have a match.
+MOC_FILES = $(shell find . -type f -iname '*.h*' -exec grep -l 'Q_OBJECT' {} \;)
+
 ################################################################################
 # Rules
 ################################################################################
@@ -67,7 +73,7 @@ OBJ = $(patsubst %, $(OBJ_PATH)/%.o, $(filter-out dist/obj/tests/%,$(filter-out 
 # 		recipe/instructions
 # Note: In the tech litterature, prerequisites and dependencies are
 # interchangeably used and qualify the same thing.
-all: $(EXECS_WITH_PATH)
+all: regenerate-moc-files $(EXECS_WITH_PATH)
 
 debug: CFLAGS+=-DWITH_DEBUG
 debug: mrproper
@@ -84,17 +90,38 @@ debug: all
 #$^ : All the dependencies;
 #$* : All wildcard character, same as * but syntax interpreted by Make
 $(DIST_PATH)/main: $(OBJ_PATH)/main.o $(OBJ)
-	echo "[+] Building $@"
+	# With 'notdir', we remove the path of the file, just to keep the filename.
+	echo "[+] Building $(notdir $(@))"
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 $(OBJ_PATH)/%.o: $(SRC_PATH)/%.cpp
-	echo "[+] Building $@"
+	echo "[+] Building $(notdir $(@))"
 	# Create parent directory on the fly to store objects. We are making use of
 	# the make's internal variable $(@D) which means "the directory the current
 	# target resides in". Needed to have our directory hierarchy created.
 	# src.: https://stackoverflow.com/a/1951111/3514658
 	@mkdir -p $(@D)
 	$(CC) $(CFLAGS) -c -o $@ $<
+
+regenerate-moc-files: $(MOC_FILES)
+	# 1. For each MOC_FILES, we iterate with the variable 'file', 'file'
+	#    contains the full path + filename
+	# 2. We need to use eval because GNU Make is using a new process for each
+	#    recipe line. To avoid this, we need to use eval and use a backslash to
+	#    break on new lines.
+	#    src.: https://superuser.com/a/790580
+	# 3. mocFileName=$(file:$(dir $(file))%.h=moc_%.cpp)): we remove the path,
+	#    replace the .h extension by .cpp and prefix the filename by 'moc_'
+	# 4. mocFullFileName = $(mocFileName:%=$(dir $(file))%): we just prefix the
+	#    filename created at the previous step 3 by the path
+	# 5. We ask the Qt tool 'moc' to regenerate the oc file for us using the
+	#    path and filename we creaeted at steps 3 and 4.
+	$(foreach file, $(MOC_FILES), \
+		$(eval mocFileName=$(file:$(dir $(file))%.h=moc_%.cpp)) \
+		$(eval mocFullFileName=$(mocFileName:%=$(dir $(file))%)) \
+		echo "[+] Regenerating $(mocFileName)" ; \
+		moc $(file) > $(mocFullFileName) ; \
+	)
 
 clean:
 	$(RM) -r $(OBJ_PATH)

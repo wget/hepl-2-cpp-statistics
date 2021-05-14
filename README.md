@@ -24,19 +24,20 @@ A simple applied statistics course in C++.
     $ git clone https://github.com/wget/hepl-2-cpp-statistics
     $ cd hepl-2-cpp-statistics
     ```
-2. from the root of the directory where you cloned this repository, clone the library to `src/lib/`:
+
+2. From the root of the directory where you cloned this repository, clone the library to `src/lib/`:
     ```
     $ git clone https://github.com/wget/hepl-2-cpp-lib src/lib/utils
     ```
 
-3. This project is built with Qt and requires to have MOC files (`.cpp` usually beginning with the `moc_` prefix). Generating moc files is only needed on Qt files containing Qt classes making use of the `Q_OBJECT` macro. While our Makefile is taking care of regenerating these moc files for you, you may want to regenerate them manually with:
+3. This project is built with Qt and requires to have MOC files (`.cpp` usually beginning with the `moc_` prefix). Generating MOC files is only needed on Qt files containing Qt classes making use of the `Q_OBJECT` macro. While our Makefile is taking care of regenerating these MOC files for you, you may want to regenerate them manually with:
     ```
     $ moc ./src/lib/graph/Graph1DContinu/graphstat1dcontinue.h > ./src/lib/graph/Graph1DContinu/moc_graphstat1dcontinue.cpp
     $ moc ./src/lib/graph/Graph1DDiscret/graphstat1ddiscrete.h > ./src/lib/graph/Graph1DDiscret/moc_graphstat1ddiscrete.cpp
     $ moc ./src/lib/graph/Graph2D/graphstat2d.h > ./src/lib/graph/Graph2D/moc_graphstat2d.cpp
     ```
 
-   The moc files are tighly coupled to the version of the Qt library being installed on the system. Therefore they need to be regenerated each time the Qt library is being updated on the system.
+   The MOC files are tighly coupled to the version of the Qt library being installed on the system. Therefore they need to be regenerated each time the Qt library is being updated on the system. [src.](https://doc.qt.io/qt-5/moc.html)
 
 4. Still from the root of this repository, build the project with:
     ```
@@ -64,7 +65,7 @@ A simple applied statistics course in C++.
     $ gdb --args ./dist/main arg1 arg2 arg3
     ```
 
-* When debugging this project we realized that some files were malformed due to the fact the teachers edited the data alternatively the data files from UNIxX or Windows. Some lines were using the UNIX EOL and some the Windows EOL characters which broke our parsing. To find out the reason we had to debug this issue carefully and `valgrind` came to the help:
+* When debugging this project, we realized that some files were malformed due to the fact the teachers edited the data alternatively from UNIX or Windows. Some lines were thus using the UNIX EOL and others the Windows EOL characters. This unsane cohabitation of EOL characters broke our parsing (now fixed). To find out the reason we had to debug this issue carefully and `valgrind` came to the help:
 
   Out of bound and parsing debug issue:
     ```
@@ -76,7 +77,7 @@ A simple applied statistics course in C++.
     $ valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose dist/main data/Donnee.dat
     ```
 
-* In the Makefile, we defined a custom rule beginning with `print-`. When calling your Makefile, you just need to suffix that rule by the name of the variable you want to display to display the content of that variable. Imagine you want to display what the `OBJ` variable is containing, just type `make print-OBJ` and you get the content displayed on your terminal:
+* In the Makefile, we defined a custom rule beginning with `print-`. When calling your Makefile, you just need to suffix that rule by the name of the variable in order to to display the content of that variable. Imagine you want to display what the `OBJ` variable is containing, just type `make print-OBJ` and you get the content displayed on your terminal:
 
     ```
     $ make print-OBJ

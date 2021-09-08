@@ -83,3 +83,14 @@ A simple applied statistics course in C++.
     $ make print-OBJ
     OBJ = dist/obj/Data1D.o dist/obj/Data2D.o dist/obj/DataSource2D.o dist/obj/DataSource.o dist/obj/DataSourceSerie2D.o dist/obj/DataSourceSerieContinue.o dist/obj/DataSourceSerieDiscrete.o dist/obj/Sample.o dist/obj/Stat1DStudy.o dist/obj/Stat2DStudy.o dist/obj/lib/graph/Graph1DContinu/graphstat1dcontinue.o dist/obj/lib/graph/Graph1DDiscret/graphstat1ddiscrete.o dist/obj/lib/graph/Graph2D/graphstat2d.o dist/obj/lib/utils/src/HeplBaseException.o dist/obj/lib/utils/src/HeplString.o dist/obj/lib/utils/src/HeplStringOutOfRangeException.o
     ```
+
+## Other notes
+
+The Qt code sent by the teacher was hard to read because not indented. While we would have used the plain old `indent` command, nowadays there are much more powerful tools that even allow to follow coding guidelines from some common companies like Google and Mozilla.
+
+`clang-format` is a tool provided by the LLVM ecosystem (a BSD alternative to the GNU GCC). [src.](https://superuser.com/a/1565780/456258)
+
+```
+$ clang-format -style=Google -i  src/lib/graph/Graph1DDiscret/graphstat1ddiscrete.cpp
+$ clang-format -style=Google -i  src/lib/graph/Graph1DContinu/graphstat1dcontinue.cpp
+```

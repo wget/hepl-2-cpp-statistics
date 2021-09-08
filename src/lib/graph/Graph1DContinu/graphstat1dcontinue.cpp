@@ -1,17 +1,19 @@
 #include "graphstat1dcontinue.h"
 
 #include <QtGui/QPainter>
+// Used to center window on screen
+#include <QtGui/QScreen>
 
 #include "ui_graphstat1dcontinue.h"
 
 GraphStat1DContinue::GraphStat1DContinue(const Stat1DStudy& E1, QWidget* parent)
     : QMainWindow(parent), ui(new Ui::GraphStat1DContinue) {
   ui->setupUi(this);
+  // Center window on screen
+  move(screen()->geometry().center() - frameGeometry().center());
   this->p =
       dynamic_cast<DataSourceSerieContinue*>((E1.getSample())->getDataSource());
   L = new HeplList<Data1D>(p->getItemOccurrenceList());
-  std::cout << "dans le graphique" << std::endl;
-  L->display();
   char Buff[10];
   sprintf(Buff, "%6.1f", E1.getMean());
   ui->lineMoyenne->setText(Buff);

@@ -3,6 +3,8 @@
 #include <string.h>
 
 #include <QtGui/QPainter>
+// Used to center window on screen
+#include <QtGui/QScreen>
 
 #include "../../../Stat1DStudy.hpp"
 #include "ui_graphstat1ddiscrete.h"
@@ -10,8 +12,9 @@
 GraphStat1DDiscrete::GraphStat1DDiscrete(const Stat1DStudy& E1, QWidget* parent)
     : QMainWindow(parent), ui(new Ui::GraphStat1DDiscrete) {
   ui->setupUi(this);
+  // Center window on screen
+  move(screen()->geometry().center() - frameGeometry().center());
   QPainter painter(this);
-  std::cout << std::endl << "dans GraphStat1DDiscrete merce" << std::endl;
   DataSourceSerieDiscrete* p =
       dynamic_cast<DataSourceSerieDiscrete*>((E1.getSample())->getDataSource());
   L = new HeplList<Data1D>(p->getItemOccurrenceList());  //-------------------

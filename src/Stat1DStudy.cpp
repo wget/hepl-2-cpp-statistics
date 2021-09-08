@@ -2,15 +2,15 @@
 
 // Constructors
 Stat1DStudy::Stat1DStudy(HeplString filename, int column) {
-    this->m_sample = nullptr;
-    this->m_mode = nullptr;
+    m_sample = nullptr;
+    m_mode = nullptr;
 
     parseToSample(filename, column);
 
     computeStats();
 
     // Display report
-    this->displayReport();
+    displayReport();
 
     if (m_sample->getDataSource()->getType() == 'C') {
         HeplString input;
@@ -32,7 +32,7 @@ Stat1DStudy::Stat1DStudy(HeplString filename, int column) {
         ((DataSourceSerieContinue*)m_sample->getDataSource())->setRangeOccurrenceList(rangeOccurrenceList);
 
         // Display report
-        this->displayReport();
+        displayReport();
     }
 }
 
@@ -63,14 +63,15 @@ void Stat1DStudy::parseToSample(const HeplString& filename, int column) {
         std::cout << "[!] The specified column value cannot be below 0. Defaulting to column 0."
                   << std::endl;
         column = 0;
-    } else if (type.explode(FILE_DELIMITER).getNumberItems() <= (size_t) column) {
+    } else if ((size_t) column >= type.explode(FILE_DELIMITER).getNumberItems()) {
         std::cout << "[!] The specified column value cannot be above the max number of columns of "
-                  << type.explode(FILE_DELIMITER).getNumberItems() - 1
-                  << " (counting from 0). Defaulting to column 0."
+                  << type.explode(FILE_DELIMITER).getNumberItems()
+                  << " - 1 (because counting from 0 in a table). Defaulting to column 0."
                   << std::endl;
         column = 0;
     }
 
+    subject = subject.explode(FILE_DELIMITER)[column];
     type = type.explode(FILE_DELIMITER)[column];
 
     // Creating our sample
@@ -78,11 +79,11 @@ void Stat1DStudy::parseToSample(const HeplString& filename, int column) {
 
     // Creating our data source
     DataSource *source;
-    if (type[column] == 'D') {
+    if (type == 'D') {
         source = new DataSourceSerieDiscrete();
         source->setType('D');
 
-    } else if (type[column] == 'C') {
+    } else if (type == 'C') {
         source = new DataSourceSerieContinue();
         source->setType('C');
 
@@ -537,10 +538,10 @@ double Stat1DStudy::getMaxValueFromSample() const {
 
 // Destructor
 Stat1DStudy::~Stat1DStudy() {
-    if (this->m_sample != nullptr) {
+    if (m_sample != nullptr) {
         delete this->m_sample;
     }
-    if (this->m_mode != nullptr) {
+    if (m_mode != nullptr) {
         delete[] m_mode;
     }
 }

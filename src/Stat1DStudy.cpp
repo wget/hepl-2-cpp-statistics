@@ -1,5 +1,10 @@
 #include "Stat1DStudy.hpp"
 
+// Qt graphs
+#include "./lib/graph/Graph1DDiscret/graphstat1ddiscrete.h"
+#include "./lib/graph/Graph1DContinu/graphstat1dcontinue.h"
+extern QApplication* qtApp;
+
 // Constructors
 Stat1DStudy::Stat1DStudy(HeplString filename, int column) {
     m_sample = nullptr;
@@ -186,12 +191,29 @@ void Stat1DStudy::displayReport() const {
     std::cout << "Quality control         " << std::endl;
     std::cout << "* Min value           : " << m_dataControlMin << std::endl;
     std::cout << "* Max value           : " << m_dataControlMax << std::endl;
+
+    if (m_sample->getDataSource()->getType() == 'D') {
+
+        GraphStat1DDiscrete w(*this);
+        w.show();
+        qtApp->exec();
+
+    } else {
+        // We assume we are in a Continue situation
+
+        GraphStat1DContinue w(*this);
+        w.show();
+        qtApp->exec();
+    }
 }
 
 void Stat1DStudy::displayRecords() const {
 
     std::cout << "Data                  : ";
 
+    // Best: We could use a pointer to the derived class via the dynamic_cast
+    // expression which is more C++ friendly, but for readability purposes we
+    // are still relying on the type.
     if (m_sample->getDataSource()->getType() == 'D') {
         HeplList<Data1D> list = ((DataSourceSerieDiscrete*)m_sample->getDataSource())->getItemOccurrenceList();
         Data1D data;
@@ -199,10 +221,6 @@ void Stat1DStudy::displayRecords() const {
             data = list[i];
             std::cout << "(" << data.getValue() << ", " << data.getHeadcount() << ") ";
         }
-        // QApplication *qtApp;
-        // GraphStat1DDiscrete w(*this);
-        // w.show();
-        // qtApp->exec();
 
     } else {
 
@@ -224,7 +242,7 @@ void Stat1DStudy::displayRecords() const {
             size_t maxNumberDigits = HeplString(getMaxValueFromSample()).size();
             HeplList<HeplList<double>> list = ((DataSourceSerieContinue*)m_sample->getDataSource())->getRangeOccurrenceList();
 
-            for (size_t i = 0;i < list.getNumberItems(); i++) {
+            for (size_t i = 0; i < list.getNumberItems(); i++) {
 
                 // We don't want a space for the first line
                 HeplString space = (i == 0) ? "" : "                        ";
